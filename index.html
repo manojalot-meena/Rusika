@@ -71,7 +71,7 @@
             overflow: hidden;
         }
         
-        /* Enhanced Stars */
+        /* Enhanced Stars - Optimized */
         .stars {
             position: absolute;
             top: 0;
@@ -108,7 +108,7 @@
             height: 3px;
         }
         
-        /* Shooting Stars - Enhanced */
+        /* Shooting Stars - Optimized */
         .shooting-stars {
             position: absolute;
             top: 0;
@@ -157,7 +157,7 @@
             }
         }
         
-        /* Nebula/Star Clouds - Enhanced */
+        /* Nebula/Star Clouds - Optimized */
         .nebula {
             position: absolute;
             border-radius: 50%;
@@ -203,7 +203,7 @@
             animation-duration: 45s;
         }
         
-        /* Enhanced Fireworks Container */
+        /* Optimized Fireworks Container - Reduced particles */
         .fireworks-container {
             position: fixed;
             top: 0;
@@ -263,7 +263,7 @@
             }
         }
         
-        /* Enhanced Film Grain */
+        /* Optimized Film Grain */
         .film-grain {
             position: fixed;
             top: 0;
@@ -273,7 +273,7 @@
             pointer-events: none;
             z-index: -1;
             opacity: 0.04;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.6' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
             animation: grainMove 8s steps(10) infinite;
             mix-blend-mode: overlay;
         }
@@ -291,7 +291,7 @@
             90% { transform: translate(-1%, 1%) }
         }
         
-        /* New Galaxy Swirl Effect */
+        /* Optimized Galaxy Swirl Effect */
         .galaxy-swirl {
             position: absolute;
             width: 1000px;
@@ -554,7 +554,7 @@
             }
         }
         
-        /* Stats in Single Line - Enhanced */
+        /* Stats in Single Line - Optimized */
         .hero-stats {
             display: flex;
             justify-content: center;
@@ -652,7 +652,7 @@
             transition: all var(--transition-medium) ease;
         }
         
-        /* Photo Gallery Section - New */
+        /* Photo Gallery Section - Optimized */
         .photo-gallery {
             padding: 80px 0;
             animation: fadeIn 1.5s ease-out;
@@ -719,11 +719,20 @@
             object-fit: cover;
             transition: all var(--transition-medium) ease;
             filter: brightness(0.9);
+            /* Preload optimization */
+            background: linear-gradient(90deg, rgba(21, 21, 34, 0.3) 25%, rgba(42, 90, 255, 0.1) 50%, rgba(21, 21, 34, 0.3) 75%);
+            background-size: 200% 100%;
+            animation: loadingShimmer 2s infinite;
         }
         
         .gallery-item:hover .gallery-img {
             transform: scale(1.1);
             filter: brightness(1.1) saturate(1.2);
+        }
+        
+        @keyframes loadingShimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
         }
         
         .gallery-overlay {
@@ -893,7 +902,7 @@
             font-size: 0.9rem;
         }
         
-        /* Lightbox Styles */
+        /* Enhanced Lightbox - Full Screen with Download */
         .lightbox {
             display: none;
             position: fixed;
@@ -901,7 +910,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.95);
+            background: rgba(0, 0, 0, 0.98);
             z-index: 10000;
             align-items: center;
             justify-content: center;
@@ -912,7 +921,7 @@
         .lightbox.active {
             display: flex;
             opacity: 1;
-            animation: lightboxFadeIn 0.5s ease-out;
+            animation: lightboxFadeIn 0.3s ease-out;
         }
         
         @keyframes lightboxFadeIn {
@@ -921,50 +930,68 @@
         }
         
         .lightbox-content {
-            max-width: 90%;
-            max-height: 90%;
+            width: 100%;
+            height: 100%;
             position: relative;
-            animation: lightboxZoom 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
-        @keyframes lightboxZoom {
-            from { transform: scale(0.8); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
+        .lightbox-img-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
         }
         
         .lightbox-img {
-            width: auto;
-            height: auto;
             max-width: 100%;
-            max-height: 85vh;
+            max-height: 100%;
+            object-fit: contain;
             border-radius: 10px;
             box-shadow: 0 0 100px rgba(42, 90, 255, 0.2),
                         0 0 200px rgba(0, 0, 0, 0.8);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            animation: lightboxZoom 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         
-        .lightbox-close {
+        @keyframes lightboxZoom {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        
+        /* Lightbox Controls */
+        .lightbox-controls {
             position: absolute;
-            top: -50px;
-            right: 0;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 15px;
+            z-index: 10001;
+        }
+        
+        .lightbox-btn {
             background: rgba(42, 90, 255, 0.3);
             border: none;
             color: white;
-            width: 40px;
-            height: 40px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             cursor: pointer;
             transition: all var(--transition-fast) ease;
             backdrop-filter: blur(10px);
             display: flex;
             align-items: center;
             justify-content: center;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
         }
         
-        .lightbox-close:hover {
+        .lightbox-btn:hover {
             background: rgba(42, 90, 255, 0.6);
-            transform: rotate(90deg) scale(1.1);
+            transform: scale(1.1);
             box-shadow: 0 0 30px var(--accent-glow);
         }
         
@@ -975,7 +1002,8 @@
             display: flex;
             justify-content: space-between;
             transform: translateY(-50%);
-            padding: 0 20px;
+            padding: 0 30px;
+            z-index: 10001;
         }
         
         .lightbox-prev,
@@ -983,8 +1011,8 @@
             background: rgba(42, 90, 255, 0.3);
             border: none;
             color: white;
-            width: 50px;
-            height: 50px;
+            width: 60px;
+            height: 60px;
             border-radius: 50%;
             font-size: 1.5rem;
             cursor: pointer;
@@ -993,35 +1021,87 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
         }
         
         .lightbox-prev:hover,
         .lightbox-next:hover {
             background: rgba(42, 90, 255, 0.6);
             transform: scale(1.1);
-            box-shadow: 0 0 30px var(--accent-glow);
-        }
-        
-        .lightbox-prev {
-            left: 20px;
-        }
-        
-        .lightbox-next {
-            right: 20px;
+            box-shadow: 0 0 40px var(--accent-glow);
         }
         
         .lightbox-caption {
             position: absolute;
-            bottom: -50px;
+            bottom: 30px;
             left: 0;
             right: 0;
             text-align: center;
             color: white;
-            font-size: 1.1rem;
-            padding: 10px;
+            font-size: 1.2rem;
+            padding: 20px;
             background: rgba(0, 0, 0, 0.7);
-            border-radius: 10px;
+            backdrop-filter: blur(15px);
+            z-index: 10001;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .lightbox-index {
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            color: white;
+            font-size: 1.1rem;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 10px 20px;
+            border-radius: 25px;
             backdrop-filter: blur(10px);
+            z-index: 10001;
+        }
+        
+        /* Loading Indicator */
+        .loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+        
+        .loading.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+        
+        .loading-spinner {
+            width: 80px;
+            height: 80px;
+            border: 5px solid rgba(42, 90, 255, 0.2);
+            border-top: 5px solid var(--accent);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            box-shadow: 0 0 30px var(--accent-glow);
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .loading-text {
+            position: absolute;
+            bottom: 30%;
+            font-family: 'Orbitron', sans-serif;
+            color: var(--accent);
+            font-size: 1.2rem;
+            text-shadow: 0 0 20px var(--accent-glow);
+            animation: pulse 1.5s infinite;
         }
         
         /* Placeholder Section */
@@ -1263,7 +1343,7 @@
             font-weight: 300;
         }
         
-        /* New Floating Particles */
+        /* Optimized Floating Particles - Reduced count */
         .floating-particles {
             position: fixed;
             top: 0;
@@ -1350,6 +1430,17 @@
             
             .blog-title {
                 font-size: 2.2rem;
+            }
+            
+            .lightbox-btn {
+                width: 45px;
+                height: 45px;
+            }
+            
+            .lightbox-prev,
+            .lightbox-next {
+                width: 50px;
+                height: 50px;
             }
         }
         
@@ -1455,11 +1546,40 @@
                 gap: 20px;
             }
             
-            .lightbox-prev,
-            .lightbox-next {
+            .lightbox-controls {
+                top: 15px;
+                right: 15px;
+                gap: 10px;
+            }
+            
+            .lightbox-btn {
                 width: 40px;
                 height: 40px;
+                font-size: 1.1rem;
+            }
+            
+            .lightbox-nav {
+                padding: 0 15px;
+            }
+            
+            .lightbox-prev,
+            .lightbox-next {
+                width: 45px;
+                height: 45px;
                 font-size: 1.2rem;
+            }
+            
+            .lightbox-index {
+                top: 20px;
+                left: 20px;
+                font-size: 1rem;
+                padding: 8px 15px;
+            }
+            
+            .lightbox-caption {
+                bottom: 20px;
+                font-size: 1rem;
+                padding: 15px;
             }
         }
         
@@ -1548,17 +1668,37 @@
                 gap: 25px;
             }
             
-            .lightbox-content {
-                max-width: 95%;
+            .lightbox-controls {
+                top: 10px;
+                right: 10px;
+            }
+            
+            .lightbox-btn {
+                width: 35px;
+                height: 35px;
+                font-size: 1rem;
             }
             
             .lightbox-nav {
                 padding: 0 10px;
             }
+            
+            .lightbox-prev,
+            .lightbox-next {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Loading Screen -->
+    <div class="loading" id="loading">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">tammu</div>
+    </div>
+    
     <!-- Universal Star Background -->
     <div class="universe-container">
         <!-- Galaxy Swirl Effect -->
@@ -1585,13 +1725,24 @@
     <!-- Film Grain Overlay -->
     <div class="film-grain"></div>
     
-    <!-- Lightbox -->
+    <!-- Enhanced Lightbox - Full Screen -->
     <div class="lightbox" id="lightbox">
         <div class="lightbox-content">
-            <img class="lightbox-img" id="lightbox-img" src="" alt="">
-            <button class="lightbox-close" id="lightbox-close">
-                <i class="fas fa-times"></i>
-            </button>
+            <div class="lightbox-img-container">
+                <img class="lightbox-img" id="lightbox-img" src="" alt="">
+            </div>
+            
+            <!-- Lightbox Controls -->
+            <div class="lightbox-controls">
+                <button class="lightbox-btn" id="lightbox-download" title="Download">
+                    <i class="fas fa-download"></i>
+                </button>
+                <button class="lightbox-btn" id="lightbox-close" title="Close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <!-- Navigation -->
             <div class="lightbox-nav">
                 <button class="lightbox-prev" id="lightbox-prev">
                     <i class="fas fa-chevron-left"></i>
@@ -1600,6 +1751,11 @@
                     <i class="fas fa-chevron-right"></i>
                 </button>
             </div>
+            
+            <!-- Image Index -->
+            <div class="lightbox-index" id="lightbox-index">1 / 5</div>
+            
+            <!-- Caption -->
             <div class="lightbox-caption" id="lightbox-caption"></div>
         </div>
     </div>
@@ -1667,35 +1823,35 @@
             <h2 class="gallery-title">tammu GALLERY</h2>
             <div class="gallery-grid">
                 <div class="gallery-item" data-img="https://i.ibb.co/5X61cHHX/1768612647845.png" data-title="FILM SCENE 1 - बर्फ़ की गोद में बचपन">
-                    <img src="https://i.ibb.co/5X61cHHX/1768612647845.png" alt="tammu Scene 1" class="gallery-img">
+                    <img src="https://i.ibb.co/5X61cHHX/1768612647845.png" alt="tammu Scene 1" class="gallery-img" loading="lazy">
                     <div class="gallery-overlay">
                         <div class="gallery-caption">FILM SCENE 1</div>
                         <div class="gallery-description">बर्फ़ की गोद में बचपन</div>
                     </div>
                 </div>
                 <div class="gallery-item" data-img="https://i.ibb.co/GQbPydg7/1768612553483.png" data-title="FILM SCENE 2 - ठंड, दोस्ती और मासूमियत">
-                    <img src="https://i.ibb.co/GQbPydg7/1768612553483.png" alt="tammu Scene 2" class="gallery-img">
+                    <img src="https://i.ibb.co/GQbPydg7/1768612553483.png" alt="tammu Scene 2" class="gallery-img" loading="lazy">
                     <div class="gallery-overlay">
                         <div class="gallery-caption">FILM SCENE 2</div>
                         <div class="gallery-description">ठंड, दोस्ती और मासूमियत</div>
                     </div>
                 </div>
                 <div class="gallery-item" data-img="https://i.ibb.co/XxcTKhZh/1768612427995.png" data-title="FILM SCENE 3 - पहाड़ों में पलता बचपन">
-                    <img src="https://i.ibb.co/XxcTKhZh/1768612427995.png" alt="tammu Scene 3" class="gallery-img">
+                    <img src="https://i.ibb.co/XxcTKhZh/1768612427995.png" alt="tammu Scene 3" class="gallery-img" loading="lazy">
                     <div class="gallery-overlay">
                         <div class="gallery-caption">FILM SCENE 3</div>
                         <div class="gallery-description">पहाड़ों में पलता बचपन</div>
                     </div>
                 </div>
                 <div class="gallery-item" data-img="https://i.ibb.co/S49vvhqg/1768612416824.png" data-title="FILM SCENE 4 - रंग जो ठंड को भी हरा दें">
-                    <img src="https://i.ibb.co/S49vvhqg/1768612416824.png" alt="tammu Scene 4" class="gallery-img">
+                    <img src="https://i.ibb.co/S49vvhqg/1768612416824.png" alt="tammu Scene 4" class="gallery-img" loading="lazy">
                     <div class="gallery-overlay">
                         <div class="gallery-caption">FILM SCENE 4</div>
                         <div class="gallery-description">रंग जो ठंड को भी हरा दें</div>
                     </div>
                 </div>
                 <div class="gallery-item" data-img="https://i.ibb.co/S45MTqD4/1768292286141.png" data-title="FILM SCENE 5 - एक सीख: खुशी का दर्शन">
-                    <img src="https://i.ibb.co/S45MTqD4/1768292286141.png" alt="tammu Scene 5" class="gallery-img">
+                    <img src="https://i.ibb.co/S45MTqD4/1768292286141.png" alt="tammu Scene 5" class="gallery-img" loading="lazy">
                     <div class="gallery-overlay">
                         <div class="gallery-caption">FILM SCENE 5</div>
                         <div class="gallery-description">एक सीख: खुशी का दर्शन</div>
@@ -1797,6 +1953,23 @@
     </footer>
 
     <script>
+        // Performance Optimization - Preload critical resources
+        document.addEventListener('DOMContentLoaded', function() {
+            // Preload gallery images
+            const galleryImages = [
+                'https://i.ibb.co/5X61cHHX/1768612647845.png',
+                'https://i.ibb.co/GQbPydg7/1768612553483.png',
+                'https://i.ibb.co/XxcTKhZh/1768612427995.png',
+                'https://i.ibb.co/S49vvhqg/1768612416824.png',
+                'https://i.ibb.co/S45MTqD4/1768292286141.png'
+            ];
+            
+            galleryImages.forEach(imgSrc => {
+                const img = new Image();
+                img.src = imgSrc;
+            });
+        });
+        
         // Theme switcher functionality
         const themeButtons = document.querySelectorAll('.theme-btn');
         
@@ -1847,20 +2020,20 @@
             }
         }
         
-        // Create Enhanced Stars
+        // Create Optimized Stars - Reduced count for performance
         function createStars() {
             const starsContainer = document.getElementById('stars');
-            const starCount = 800;
+            const starCount = 400; // Reduced from 800 for better performance
             
             for (let i = 0; i < starCount; i++) {
                 const star = document.createElement('div');
                 
                 // Random properties
-                const size = Math.random() * 4;
-                const duration = Math.random() * 6 + 2;
+                const size = Math.random() * 3;
+                const duration = Math.random() * 5 + 2;
                 const left = Math.random() * 100;
                 const top = Math.random() * 100;
-                const opacity = Math.random() * 0.8 + 0.2;
+                const opacity = Math.random() * 0.7 + 0.2;
                 const delay = Math.random() * 5;
                 
                 star.classList.add('star');
@@ -1877,7 +2050,7 @@
                 star.style.animationDelay = `${delay}s`;
                 
                 // Color variation
-                if (Math.random() > 0.6) {
+                if (Math.random() > 0.7) {
                     const colors = ['#2a5aff', '#7a5fff', '#ff5f7c', '#00ff88', '#ffcc00'];
                     const color = colors[Math.floor(Math.random() * colors.length)];
                     star.style.backgroundColor = color;
@@ -1888,10 +2061,10 @@
             }
         }
         
-        // Create Enhanced Shooting Stars
+        // Create Optimized Shooting Stars - Reduced count
         function createShootingStars() {
             const shootingStarsContainer = document.getElementById('shootingStars');
-            const shootingStarCount = 15;
+            const shootingStarCount = 8; // Reduced from 15
             
             for (let i = 0; i < shootingStarCount; i++) {
                 const shootingStar = document.createElement('div');
@@ -1900,11 +2073,11 @@
                 // Random properties
                 const startX = Math.random() * 100;
                 const startY = Math.random() * 100;
-                const distanceX = Math.random() * 300 - 150;
-                const distanceY = Math.random() * 300 - 150;
-                const duration = Math.random() * 4 + 1;
+                const distanceX = Math.random() * 200 - 100;
+                const distanceY = Math.random() * 200 - 100;
+                const duration = Math.random() * 3 + 1;
                 const delay = Math.random() * 20;
-                const size = Math.random() * 3 + 2;
+                const size = Math.random() * 2 + 2;
                 
                 shootingStar.style.left = `${startX}%`;
                 shootingStar.style.top = `${startY}%`;
@@ -1920,28 +2093,28 @@
                     const colors = ['#2a5aff', '#7a5fff', '#ff5f7c', '#00ff88'];
                     const color = colors[Math.floor(Math.random() * colors.length)];
                     shootingStar.style.backgroundColor = color;
-                    shootingStar.style.boxShadow = `0 0 20px 3px ${color}`;
+                    shootingStar.style.boxShadow = `0 0 15px 2px ${color}`;
                 }
                 
                 shootingStarsContainer.appendChild(shootingStar);
             }
         }
         
-        // Create Floating Particles
+        // Create Optimized Floating Particles - Reduced count
         function createFloatingParticles() {
             const particlesContainer = document.getElementById('floatingParticles');
-            const particleCount = 30;
+            const particleCount = 20; // Reduced from 30
             
             for (let i = 0; i < particleCount; i++) {
                 const particle = document.createElement('div');
                 particle.classList.add('particle');
                 
                 // Random properties
-                const size = Math.random() * 10 + 5;
+                const size = Math.random() * 8 + 5;
                 const left = Math.random() * 100;
-                const duration = Math.random() * 30 + 20;
+                const duration = Math.random() * 25 + 20;
                 const delay = Math.random() * 10;
-                const blur = Math.random() * 10 + 5;
+                const blur = Math.random() * 8 + 5;
                 
                 particle.style.width = `${size}px`;
                 particle.style.height = `${size}px`;
@@ -1958,7 +2131,7 @@
             }
         }
         
-        // Create Enhanced Fireworks
+        // Create Optimized Fireworks - Reduced particles for performance
         function createFirework(x, y, color) {
             const fireworksContainer = document.getElementById('fireworksContainer');
             
@@ -1974,8 +2147,8 @@
             
             fireworksContainer.appendChild(firework);
             
-            // Create particles with variation
-            const particleCount = Math.floor(Math.random() * 20) + 25;
+            // Create particles with variation - Reduced count for performance
+            const particleCount = Math.floor(Math.random() * 15) + 15; // Reduced from 25-45 to 15-30
             for (let i = 0; i < particleCount; i++) {
                 const particle = document.createElement('div');
                 particle.classList.add('firework-particle');
@@ -1986,15 +2159,15 @@
                 
                 // Random direction and distance
                 const angle = Math.random() * Math.PI * 2;
-                const distance = Math.random() * 150 + 70;
+                const distance = Math.random() * 100 + 50;
                 const particleX = Math.cos(angle) * distance;
                 const particleY = Math.sin(angle) * distance;
                 const rotation = Math.random() * 720;
                 
                 particle.style.setProperty('--particle-x', `${particleX}px`);
                 particle.style.setProperty('--particle-y', `${particleY}px`);
-                particle.style.animationDelay = `${Math.random() * 0.3}s`;
-                particle.style.animationDuration = `${Math.random() * 1 + 2}s`;
+                particle.style.animationDelay = `${Math.random() * 0.2}s`;
+                particle.style.animationDuration = `${Math.random() * 1 + 1.5}s`;
                 particle.style.transform = `rotate(${rotation}deg)`;
                 
                 fireworksContainer.appendChild(particle);
@@ -2004,7 +2177,7 @@
                     if (particle.parentNode) {
                         particle.remove();
                     }
-                }, 3000);
+                }, 2500);
             }
             
             // Remove firework after animation
@@ -2012,7 +2185,7 @@
                 if (firework.parentNode) {
                     firework.remove();
                 }
-            }, 2000);
+            }, 1500);
         }
         
         // Create firework effect for buttons
@@ -2026,26 +2199,18 @@
             createFirework(x, y, color);
         }
         
-        // Random fireworks generator
+        // Optimized Random fireworks generator - Less frequent
         function generateRandomFireworks() {
-            const colors = ['#2a5aff', '#7a5fff', '#ff5f7c', '#00ff88', '#ffcc00'];
-            
             setInterval(() => {
-                if (Math.random() > 0.8) { // 20% chance for firework
+                if (Math.random() > 0.9) { // 10% chance for firework (was 20%)
+                    const colors = ['#2a5aff', '#7a5fff', '#ff5f7c', '#00ff88', '#ffcc00'];
                     const x = Math.random() * window.innerWidth;
-                    const y = Math.random() * window.innerHeight * 0.7; // Keep in top 70%
+                    const y = Math.random() * window.innerHeight * 0.7;
                     const color = colors[Math.floor(Math.random() * colors.length)];
                     
                     createFirework(x, y, color);
-                    
-                    // Sometimes create a double firework
-                    if (Math.random() > 0.7) {
-                        setTimeout(() => {
-                            createFirework(x + 50, y - 50, colors[Math.floor(Math.random() * colors.length)]);
-                        }, 300);
-                    }
                 }
-            }, 2500);
+            }, 3500); // Increased interval from 2500ms to 3500ms
         }
         
         // Subscription button functionality
@@ -2057,8 +2222,8 @@
                 subscribeBtn.style.boxShadow = '0 15px 40px rgba(0, 255, 136, 0.4)';
                 subscribeBtn.disabled = true;
                 
-                // Create celebration fireworks
-                for (let i = 0; i < 15; i++) {
+                // Create celebration fireworks - Reduced count
+                for (let i = 0; i < 10; i++) {
                     setTimeout(() => {
                         const colors = ['#00ff88', '#00ccff', '#ffcc00', '#ff5f7c'];
                         const x = Math.random() * window.innerWidth;
@@ -2066,7 +2231,7 @@
                         const color = colors[Math.floor(Math.random() * colors.length)];
                         
                         createFirework(x, y, color);
-                    }, i * 150);
+                    }, i * 200);
                 }
                 
                 // Create a success notification
@@ -2090,13 +2255,15 @@
             });
         }
         
-        // Lightbox functionality
+        // Enhanced Lightbox functionality
         const lightbox = document.getElementById('lightbox');
         const lightboxImg = document.getElementById('lightbox-img');
         const lightboxClose = document.getElementById('lightbox-close');
+        const lightboxDownload = document.getElementById('lightbox-download');
         const lightboxPrev = document.getElementById('lightbox-prev');
         const lightboxNext = document.getElementById('lightbox-next');
         const lightboxCaption = document.getElementById('lightbox-caption');
+        const lightboxIndex = document.getElementById('lightbox-index');
         
         const galleryItems = document.querySelectorAll('.gallery-item');
         let currentImageIndex = 0;
@@ -2119,19 +2286,45 @@
         
         // Open lightbox with current image
         function openLightbox() {
-            lightboxImg.src = images[currentImageIndex];
-            lightboxCaption.textContent = captions[currentImageIndex];
-            lightbox.classList.add('active');
-            document.body.style.overflow = 'hidden';
+            const loadingImg = new Image();
+            loadingImg.src = images[currentImageIndex];
             
-            // Create fireworks effect when opening lightbox
-            const colors = ['#2a5aff', '#7a5fff', '#ff5f7c'];
-            for (let i = 0; i < 5; i++) {
-                setTimeout(() => {
-                    const color = colors[Math.floor(Math.random() * colors.length)];
-                    createFirework(window.innerWidth / 2, window.innerHeight / 2, color);
-                }, i * 200);
-            }
+            // Show loading state
+            lightboxImg.style.opacity = '0.5';
+            lightboxImg.src = '';
+            
+            loadingImg.onload = function() {
+                lightboxImg.src = images[currentImageIndex];
+                lightboxImg.style.opacity = '1';
+                lightboxCaption.textContent = captions[currentImageIndex];
+                lightboxIndex.textContent = `${currentImageIndex + 1} / ${images.length}`;
+                lightbox.classList.add('active');
+                document.body.style.overflow = 'hidden';
+                
+                // Preload next and previous images for faster navigation
+                preloadAdjacentImages();
+                
+                // Create fireworks effect when opening lightbox
+                const colors = ['#2a5aff', '#7a5fff', '#ff5f7c'];
+                for (let i = 0; i < 3; i++) {
+                    setTimeout(() => {
+                        const color = colors[Math.floor(Math.random() * colors.length)];
+                        createFirework(window.innerWidth / 2, window.innerHeight / 2, color);
+                    }, i * 300);
+                }
+            };
+        }
+        
+        // Preload adjacent images for faster navigation
+        function preloadAdjacentImages() {
+            const nextIndex = (currentImageIndex + 1) % images.length;
+            const prevIndex = (currentImageIndex - 1 + images.length) % images.length;
+            
+            const nextImg = new Image();
+            nextImg.src = images[nextIndex];
+            
+            const prevImg = new Image();
+            prevImg.src = images[prevIndex];
         }
         
         // Close lightbox
@@ -2143,34 +2336,77 @@
         // Show next image
         function showNextImage() {
             currentImageIndex = (currentImageIndex + 1) % images.length;
-            lightboxImg.src = images[currentImageIndex];
-            lightboxCaption.textContent = captions[currentImageIndex];
-            animateImageChange();
+            updateLightboxImage();
         }
         
         // Show previous image
         function showPrevImage() {
             currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
-            lightboxImg.src = images[currentImageIndex];
-            lightboxCaption.textContent = captions[currentImageIndex];
-            animateImageChange();
+            updateLightboxImage();
         }
         
-        // Animate image change
-        function animateImageChange() {
-            lightboxImg.style.animation = 'none';
-            setTimeout(() => {
-                lightboxImg.style.animation = 'lightboxZoom 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+        // Update lightbox image with loading state
+        function updateLightboxImage() {
+            const loadingImg = new Image();
+            loadingImg.src = images[currentImageIndex];
+            
+            // Show loading state
+            lightboxImg.style.opacity = '0.5';
+            lightboxImg.style.transform = 'scale(0.95)';
+            
+            loadingImg.onload = function() {
+                lightboxImg.src = images[currentImageIndex];
+                lightboxCaption.textContent = captions[currentImageIndex];
+                lightboxIndex.textContent = `${currentImageIndex + 1} / ${images.length}`;
                 
-                // Add a small firework effect on image change
-                const colors = ['#2a5aff', '#7a5fff', '#ff5f7c'];
-                const color = colors[Math.floor(Math.random() * colors.length)];
-                createFirework(window.innerWidth / 2, window.innerHeight / 2, color);
-            }, 10);
+                // Reset opacity and trigger animation
+                setTimeout(() => {
+                    lightboxImg.style.opacity = '1';
+                    lightboxImg.style.transform = 'scale(1)';
+                    lightboxImg.style.animation = 'lightboxZoom 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+                    
+                    // Preload next images
+                    preloadAdjacentImages();
+                    
+                    // Add a small firework effect on image change
+                    const colors = ['#2a5aff', '#7a5fff', '#ff5f7c'];
+                    const color = colors[Math.floor(Math.random() * colors.length)];
+                    createFirework(window.innerWidth / 2, window.innerHeight / 2, color);
+                }, 50);
+            };
+        }
+        
+        // Download current image
+        function downloadImage() {
+            const link = document.createElement('a');
+            link.href = images[currentImageIndex];
+            link.download = `tammu-scene-${currentImageIndex + 1}.png`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            // Show download confirmation
+            const downloadNotification = document.createElement('div');
+            downloadNotification.innerHTML = `
+                <div style="position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: rgba(42, 90, 255, 0.15); 
+                     backdrop-filter: blur(15px); border: 1px solid var(--accent); border-radius: 15px; 
+                     padding: 15px 25px; color: white; z-index: 10001; animation: slideDown 0.3s ease-out; 
+                     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), 0 0 30px var(--accent-glow);">
+                    <i class="fas fa-download" style="color: var(--accent); margin-right: 10px;"></i>
+                    <span style="font-weight: 600;">Download started: tammu-scene-${currentImageIndex + 1}.png</span>
+                </div>
+            `;
+            document.body.appendChild(downloadNotification);
+            
+            setTimeout(() => {
+                downloadNotification.style.animation = 'slideUp 0.3s ease-out';
+                setTimeout(() => downloadNotification.remove(), 300);
+            }, 2000);
         }
         
         // Event listeners for lightbox controls
         lightboxClose.addEventListener('click', closeLightbox);
+        lightboxDownload.addEventListener('click', downloadImage);
         lightboxPrev.addEventListener('click', showPrevImage);
         lightboxNext.addEventListener('click', showNextImage);
         
@@ -2190,6 +2426,8 @@
                     showNextImage();
                 } else if (e.key === 'ArrowLeft') {
                     showPrevImage();
+                } else if (e.key === 'd' || e.key === 'D') {
+                    downloadImage();
                 }
             }
         });
@@ -2222,15 +2460,32 @@
             }
         }
         
+        // Loading screen functionality
+        const loadingScreen = document.getElementById('loading');
+        
+        // Hide loading screen when page is loaded
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                loadingScreen.classList.add('hidden');
+                
+                // Remove loading screen from DOM after animation
+                setTimeout(function() {
+                    loadingScreen.style.display = 'none';
+                }, 500);
+            }, 1000); // Reduced from 1500ms to 1000ms
+        });
+        
         // Initialize animations
         document.addEventListener('DOMContentLoaded', () => {
-            // Create stars, shooting stars, and particles
+            // Create optimized stars, shooting stars, and particles
             createStars();
             createShootingStars();
             createFloatingParticles();
             
-            // Start random fireworks
-            generateRandomFireworks();
+            // Start optimized random fireworks
+            setTimeout(() => {
+                generateRandomFireworks();
+            }, 2000); // Start after page loads
             
             // Enhanced hover effects for stat items
             const statItems = document.querySelectorAll('.stat-item');
@@ -2259,20 +2514,20 @@
                 });
             });
             
-            // Create occasional big fireworks on page
+            // Create occasional big fireworks on page - Reduced frequency
             setInterval(() => {
-                if (Math.random() > 0.85) { // 15% chance
+                if (Math.random() > 0.9) { // 10% chance (was 15%)
                     const colors = ['#2a5aff', '#ff5f7c', '#00ff88', '#ffcc00'];
-                    for (let i = 0; i < 5; i++) {
+                    for (let i = 0; i < 3; i++) { // Reduced from 5 to 3
                         setTimeout(() => {
                             const x = Math.random() * window.innerWidth;
                             const y = Math.random() * window.innerHeight * 0.6;
                             const color = colors[Math.floor(Math.random() * colors.length)];
                             createFirework(x, y, color);
-                        }, i * 200);
+                        }, i * 300);
                     }
                 }
-            }, 12000);
+            }, 15000); // Increased interval from 12000ms to 15000ms
             
             // Add CSS for animations
             const style = document.createElement('style');
@@ -2299,49 +2554,83 @@
                     }
                 }
                 
+                @keyframes slideDown {
+                    from {
+                        transform: translate(-50%, -100%);
+                        opacity: 0;
+                    }
+                    to {
+                        transform: translate(-50%, 0);
+                        opacity: 1;
+                    }
+                }
+                
+                @keyframes slideUp {
+                    from {
+                        transform: translate(-50%, 0);
+                        opacity: 1;
+                    }
+                    to {
+                        transform: translate(-50%, -100%);
+                        opacity: 0;
+                    }
+                }
+                
                 @keyframes pulse {
                     0%, 100% { transform: scale(1); }
                     50% { transform: scale(1.3); }
                 }
             `;
             document.head.appendChild(style);
+            
+            // Preload lightbox images in background
+            setTimeout(preloadAllLightboxImages, 2000);
         });
         
-        // Create fireworks on click anywhere
+        // Function to preload all lightbox images
+        function preloadAllLightboxImages() {
+            images.forEach(imgSrc => {
+                const img = new Image();
+                img.src = imgSrc;
+            });
+        }
+        
+        // Create fireworks on click anywhere - Reduced for performance
         document.addEventListener('click', (e) => {
             // Don't create fireworks if clicking on gallery items or lightbox controls
             if (!e.target.closest('.gallery-item') && 
                 !e.target.closest('.lightbox') &&
-                !e.target.closest('.lightbox-close') &&
+                !e.target.closest('.lightbox-btn') &&
                 !e.target.closest('.lightbox-prev') &&
                 !e.target.closest('.lightbox-next')) {
-                const colors = ['#2a5aff', '#7a5fff', '#ff5f7c', '#00ff88'];
-                const color = colors[Math.floor(Math.random() * colors.length)];
-                createFirework(e.clientX, e.clientY, color);
                 
-                // Sometimes create a secondary firework
-                if (Math.random() > 0.5) {
-                    setTimeout(() => {
-                        const secondaryColor = colors[Math.floor(Math.random() * colors.length)];
-                        createFirework(e.clientX + 30, e.clientY - 30, secondaryColor);
-                    }, 200);
+                // Reduced chance of creating fireworks on click
+                if (Math.random() > 0.7) { // 30% chance
+                    const colors = ['#2a5aff', '#7a5fff', '#ff5f7c', '#00ff88'];
+                    const color = colors[Math.floor(Math.random() * colors.length)];
+                    createFirework(e.clientX, e.clientY, color);
                 }
             }
         });
         
-        // Add parallax effect to nebulas on mouse move
+        // Optimized parallax effect - Throttled for performance
+        let mouseMoveTimeout;
         document.addEventListener('mousemove', (e) => {
-            const nebulas = document.querySelectorAll('.nebula');
-            const mouseX = e.clientX / window.innerWidth;
-            const mouseY = e.clientY / window.innerHeight;
-            
-            nebulas.forEach((nebula, index) => {
-                const speed = 0.02 * (index + 1);
-                const x = (mouseX - 0.5) * 100 * speed;
-                const y = (mouseY - 0.5) * 100 * speed;
+            // Throttle the parallax effect
+            clearTimeout(mouseMoveTimeout);
+            mouseMoveTimeout = setTimeout(() => {
+                const nebulas = document.querySelectorAll('.nebula');
+                const mouseX = e.clientX / window.innerWidth;
+                const mouseY = e.clientY / window.innerHeight;
                 
-                nebula.style.transform = `translate(${x}px, ${y}px)`;
-            });
+                nebulas.forEach((nebula, index) => {
+                    const speed = 0.01 * (index + 1); // Reduced from 0.02
+                    const x = (mouseX - 0.5) * 50 * speed; // Reduced movement
+                    const y = (mouseY - 0.5) * 50 * speed;
+                    
+                    nebula.style.transform = `translate(${x}px, ${y}px)`;
+                });
+            }, 50); // Throttle to 20fps
         });
     </script>
 </body>
